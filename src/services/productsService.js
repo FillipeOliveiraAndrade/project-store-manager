@@ -6,14 +6,21 @@ const findAll = async () => {
 };
 
 const findById = async (id) => {
-  // Object.values(JSON.parse(JSON.stringify(product)));
   const product = await productsModel.findById(id);
   if (product) return { type: null, message: product }; 
 
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
+const createNewProduct = async (name) => {
+  const productId = await productsModel.createNewProduct(name);
+  const getNewProduct = await productsModel.findById(productId);
+
+  return { type: null, message: getNewProduct };
+};
+
 module.exports = {
   findAll,
   findById,
+  createNewProduct,
 };

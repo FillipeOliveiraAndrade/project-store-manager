@@ -5,7 +5,7 @@ const sinonChai = require('sinon-chai');
 const { expect } = chai;
 chai.use(sinonChai);
 
-const { product } = require('./mocks/productsMocks');
+const { product, newProduct } = require('./mocks/productsMocks');
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
 
@@ -57,5 +57,22 @@ describe('Testes de unidade do controller de produtos', () => {
     });
 
     afterEach(sinon.restore);
+  });
+
+  describe('Cadastrando produto', () => {
+    it('retorna o produto cadastrado', async () => {
+      const req = { body: { name: 'ProdutoX' } };
+      const res = {};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'createNewProduct')
+        .resolves({ type: null, message: newProduct });
+      
+      await productsController.createNewProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(newProduct);
+    });
   });
 });

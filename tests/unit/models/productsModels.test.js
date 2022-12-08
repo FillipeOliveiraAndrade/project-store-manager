@@ -45,4 +45,17 @@ describe('Testes de unidade do model de produtos', () => {
 
     afterEach(sinon.restore);
   });
+
+  describe('Cadastrando um novo produto', () => {
+    beforeEach(() => {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    });
+
+    it('retorna o insertId do produto cadastrado', async () => {
+      const result = await productsModel.createNewProduct('Olávio');
+      expect(result).to.be.equal(4);
+    });
+
+    afterEach(sinon.restore);
+  });
 });

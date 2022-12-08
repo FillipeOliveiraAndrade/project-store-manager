@@ -7,7 +7,7 @@ const products = [
     id: 2,
     name: "Traje de encolhimento"
   }
-]
+];
 
 module.exports = {
   products,

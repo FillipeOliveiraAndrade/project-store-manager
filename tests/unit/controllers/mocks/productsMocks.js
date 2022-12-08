@@ -9,6 +9,12 @@ const product = [
   }
 ]
 
+const newProduct = {
+  id: 4,
+  name: "ProdutoX"
+}
+
 module.exports = {
   product,
+  newProduct,
 }
