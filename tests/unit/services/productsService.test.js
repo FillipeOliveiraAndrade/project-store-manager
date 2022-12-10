@@ -21,7 +21,7 @@ describe('Testes de unidade do service de produtos', () => {
 
   describe('Listando um produto específico recuperado pelo ID', () => {
     beforeEach(() => {
-      sinon.stub(productsModel, 'findAll').resolves(products);
+      sinon.stub(productsModel, 'findById').resolves(products[0]);
     });
 
     it('retorna o produto solicitado', async () => {
@@ -29,13 +29,6 @@ describe('Testes de unidade do service de produtos', () => {
 
       expect(result.type).to.be.null;
       expect(result.message).to.deep.equal(products[0]);
-    });
-
-    it('retorna um erro caso não exista um produto', async () => {
-      const result = await productsService.findById(999);
-
-      expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
-      expect(result.message).to.be.equal('Product not found');
     });
 
     afterEach(sinon.restore);
@@ -51,6 +44,21 @@ describe('Testes de unidade do service de produtos', () => {
 
       expect(result.type).to.be.null;
       expect(result.message).to.deep.equal({ id: 4, name: 'ProdutoX' });
+    });
+
+    afterEach(sinon.restore);
+  });
+
+  describe('Deletando um produto existente', () => {
+    beforeEach(() => {
+      sinon.stub(productsModel, 'findById').resolves(products[0]);
+    });
+
+    it('retorna uma mensagem "success" caso ocorra tudo certo', async () => {
+      const result = await productsService.deleteProduct(1);
+
+      expect(result.type).to.be.null;
+      expect(result.message).to.be.equal('success');
     });
 
     afterEach(sinon.restore);

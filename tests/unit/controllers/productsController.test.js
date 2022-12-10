@@ -59,7 +59,7 @@ describe('Testes de unidade do controller de produtos', () => {
     afterEach(sinon.restore);
   });
 
-  describe('Cadastrando produto', () => {
+  describe('Cadastrando um novo produto', () => {
     it('retorna o produto cadastrado', async () => {
       const req = { body: { name: 'ProdutoX' } };
       const res = {};
