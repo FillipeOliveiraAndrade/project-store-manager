@@ -20,15 +20,24 @@ describe('Testes de unidade do service de produtos', () => {
   });
 
   describe('Listando um produto específico recuperado pelo ID', () => {
-    beforeEach(() => {
+/*     beforeEach(() => {
       sinon.stub(productsModel, 'findById').resolves(products[0]);
-    });
+    }); */
 
     it('retorna o produto solicitado', async () => {
+      sinon.stub(productsModel, 'findById').resolves(products[0]);
       const result = await productsService.findById(1);
 
       expect(result.type).to.be.null;
       expect(result.message).to.deep.equal(products[0]);
+    });
+
+    it('retorna um erro caso não encontre o produto', async () => {
+      sinon.stub(productsModel, 'findById').resolves(undefined);
+      const result = await productsService.findById(1);
+
+      expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+      expect(result.message).to.deep.equal('Product not found');
     });
 
     afterEach(sinon.restore);

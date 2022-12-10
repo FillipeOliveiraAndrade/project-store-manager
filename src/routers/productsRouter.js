@@ -5,6 +5,7 @@ const { validateName } = require('../middlewares');
 
 const router = express.Router();
 
+router.get('/search', productsController.getProductByName);
 router.get('/', productsController.listProducts);
 router.get('/:id', productsController.getProductById);
 
