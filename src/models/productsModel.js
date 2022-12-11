@@ -27,7 +27,9 @@ const updateProductById = async (name, id) => {
     SET name = ?
     WHERE id = ?
   `;
-  await connection.execute(query, [name, id]);
+  const result = await connection.execute(query, [name, id]);
+
+  return result;
 };
 
 const deleteProduct = async (id) => {
