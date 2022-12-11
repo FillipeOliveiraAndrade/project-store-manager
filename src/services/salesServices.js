@@ -7,6 +7,10 @@ const findAll = async () => {
 
 const findById = async (id) => {
   const sale = await salesModels.findById(id);
+  if (sale === [] || sale.length === 0) {
+    return { type: 'SALES_NOT_FOUND', message: 'Sale not found' };
+  }
+
   return { type: null, message: sale };
 };
 
