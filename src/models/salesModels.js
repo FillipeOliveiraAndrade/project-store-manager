@@ -33,7 +33,9 @@ const findById = async (id) => {
 
 const deleteSale = async (id) => { 
   const query = 'DELETE FROM sales WHERE id = ?';
-  await connection.execute(query, [id]);
+  const result = await connection.execute(query, [id]);
+
+  return result;
 };
 
 module.exports = {

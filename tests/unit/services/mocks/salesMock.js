@@ -1,4 +1,4 @@
-const salesMock = [
+const sales = [
   {
     "saleId": 1,
     "date": "2021-09-09T04:54:29.000Z",
@@ -13,19 +13,6 @@ const salesMock = [
   }
 ];
 
-const salesDeleted = [
-  {
-    fieldCount: 0,
-    affectedRows: 1,
-    insertId: 0,
-    info: '',
-    serverStatus: 2,
-    warningStatus: 0,
-  },
-  undefined, // sem metadados
-];
-
 module.exports = {
-  salesMock,
-  salesDeleted,
+  sales,
 };

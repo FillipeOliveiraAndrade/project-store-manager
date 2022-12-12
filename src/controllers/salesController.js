@@ -21,7 +21,7 @@ const deleteSaleById = async (req, res) => {
   const { type, message } = await salesServices.deleteSale(id);
   if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-  return res.status(204).end();
+  return res.status(204).json();
 };
 
 module.exports = {

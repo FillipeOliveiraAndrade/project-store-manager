@@ -7,7 +7,7 @@ const { productsModel } = require('../../../src/models');
 const { productsService } = require('../../../src/services');
 
 describe('Testes de unidade do service de produtos', () => {
-  describe('Lista todas os produtos', () => {
+  describe('Lista todos os produtos', () => {
     it('retorna a lista completa de produtos', async () => {
       sinon.stub(productsModel, 'findAll').resolves(products);
       const result = await productsService.findAll();
@@ -20,10 +20,6 @@ describe('Testes de unidade do service de produtos', () => {
   });
 
   describe('Listando um produto específico recuperado pelo ID', () => {
-/*     beforeEach(() => {
-      sinon.stub(productsModel, 'findById').resolves(products[0]);
-    }); */
-
     it('retorna o produto solicitado', async () => {
       sinon.stub(productsModel, 'findById').resolves(products[0]);
       const result = await productsService.findById(1);
@@ -58,6 +54,18 @@ describe('Testes de unidade do service de produtos', () => {
     afterEach(sinon.restore);
   });
 
+  describe('Atualizando um novo produto', () => {
+    it('retorna o produto atualizado', async () => {
+      const name = 'Olávio';
+      const productId = 4;
+
+      const result = await productsService.updateProductById(name, productId);
+
+      expect(result.type).to.be.null;
+      expect(result.message).to.deep.equal({ id: 4, name: 'Olávio' });
+    });
+  });
+
   describe('Deletando um produto existente', () => {
     beforeEach(() => {
       sinon.stub(productsModel, 'findById').resolves(products[0]);
@@ -71,5 +79,17 @@ describe('Testes de unidade do service de produtos', () => {
     });
 
     afterEach(sinon.restore);
+  });
+
+  describe('Lista produtos recuperado pelo name', () => {
+    it('retorna o produto encontrado pelo name', async () => {
+      sinon.stub(productsModel, 'findAll').resolves(products);
+      const name = 'Martelo';
+
+      const result = await productsService.getProductByName(name);
+
+      expect(result.type).to.be.null;
+      expect(result.message).to.deep.equal([products[0]]);
+    });
   });
 });
