@@ -24,8 +24,27 @@ const deleteSale = async (id) => {
   return { type: null, message: 'success' };
 };
 
+const insert = async (products) => {
+  if (products.some(({ quantity }) => !quantity || quantity === 0)) {
+    return { errorStatus: 'QUANTITY_IS_REQUIRED', message: '"quantity" is required' };
+  }
+
+  const saleId = await salesModels.insertSale();
+
+  await Promise.all(products.map(({ productId, quantity }) => salesModels
+    .insert(productId, quantity, saleId)));
+
+  const newSale = {
+    id: saleId,
+    itemsSold: products,
+  };
+
+  return { result: newSale };
+};
+
 module.exports = {
   findAll,
   findById,
   deleteSale,
+  insert,
 };

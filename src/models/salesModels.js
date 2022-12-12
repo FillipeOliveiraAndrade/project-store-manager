@@ -38,8 +38,26 @@ const deleteSale = async (id) => {
   return result;
 };
 
+const insertSale = async () => {
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO sales(date) VALUES (default)',
+  );
+  return insertId;
+};
+
+const insert = async (productId, quantity, saleId) => {
+  const products = await connection.execute(
+    `INSERT INTO sales_products (product_id, quantity, sale_id)
+    VALUES(?, ?, ?)`,
+    [productId, quantity, saleId],
+  );
+  return products;
+};
+
 module.exports = {
   findAll,
   findById,
   deleteSale,
+  insertSale,
+  insert,
 };
