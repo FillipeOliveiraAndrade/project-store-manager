@@ -4,7 +4,6 @@ const { salesController } = require('../controllers');
 const { validateQuantity,
   validateProductId,
   validateFoundProductId,
-  saleValidation,
 } = require('../middlewares');
 
 const router = express.Router();
