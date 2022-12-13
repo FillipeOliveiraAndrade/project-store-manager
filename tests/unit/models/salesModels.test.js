@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const connection = require('../../../src/models/database/connection');
 const { salesModels } = require('../../../src/models');
-const { salesMock, salesDeleted } = require('./mocks/salesMocks');
+const { salesMock, salesDeleted, salesUpdated } = require('./mocks/salesMocks');
 
 describe('Testes de unidade do model de vendas', () => {
   describe('Lista todas as vendas', () => {
@@ -57,6 +57,25 @@ describe('Testes de unidade do model de vendas', () => {
       const [result] = await salesModels.deleteSale(saleId);
 
       expect(result.affectedRows).to.be.deep.equal(1);
+    });
+
+    afterEach(sinon.restore);
+  });
+
+  describe('Atualizando uma venda pelo ID', () => {
+    beforeEach(() => {
+      sinon.stub(connection, 'execute').resolves(salesUpdated);
+    });
+
+    it('validando se ocorreu tudo certo com a atualização', async () => {
+      const saleId = 1; 
+      const productId = 2;
+      const update = 42;
+
+      const [result] = await salesModels.updateSale(saleId, productId, update);
+
+      expect(result.affectedRows).to.be.deep.equal(1);
+      expect(result.changedRows).to.be.deep.equal(1);
     });
 
     afterEach(sinon.restore);

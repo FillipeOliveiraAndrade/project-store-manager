@@ -32,9 +32,30 @@ const insert = async (req, res) => {
   return res.status(201).json(result);
 };
 
+const updateSaleById = async (req, res) => {
+  const products = req.body;
+  const { id } = req.params;
+  const { errorStatus, message, result } = await salesServices.updateSale(Number(id), products);
+
+  if (errorStatus) return res.status(errorMap.mapError(errorStatus)).json({ message });
+
+  res.status(200).json(result);
+};
+
+/* const updateSaleById = async (req, res) => {
+  const { id } = req.params;
+  const info = req.body;
+
+  const { type, message } = await salesServices.updateSale(id, info);
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+  return res.status(200).json(message);
+}; */
+
 module.exports = {
   listSale,
   getSaleById,
   deleteSaleById,
   insert,
+  updateSaleById,
 };

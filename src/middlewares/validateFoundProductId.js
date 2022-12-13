@@ -1,6 +1,6 @@
-const productsModel = require('../models/productsModel');
+const { productsModel } = require('../models');
 
-const validateFoundProductId = async (req, res, next) => {
+const validateFoundProducId = async (req, res, next) => {
   const products = req.body;
 
   if (products.some(({ productId }) => productId === undefined)) {
@@ -19,5 +19,4 @@ const validateFoundProductId = async (req, res, next) => {
   }
   next();
 };
-
-module.exports = validateFoundProductId;
+module.exports = validateFoundProducId;
